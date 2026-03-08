@@ -1,0 +1,257 @@
+:root {
+  --epic-bg: #121212; --epic-panel: #1e1e1e; --epic-hover: #2a2a2a;
+  --epic-blue: #0078f2; --epic-green: #2ecc71; --epic-grey: #a0a0a0;
+  --text-main: #ffffff; --text-muted: #e0e0e0;
+}
+body { margin: 0; font-family: 'Inter', sans-serif; background-color: var(--epic-bg); color: var(--text-main); }
+.app-container { display: flex; height: 100vh; overflow: hidden; }
+
+/* SIDEBAR Y NAVEGACIÓN */
+.sidebar { width: 240px; background-color: var(--epic-bg); border-right: 1px solid #333; padding-top: 20px; z-index: 10; }
+.logo-container { padding: 20px; text-align: center; margin-bottom: 20px; cursor: pointer; transition: 0.2s;}
+.logo-container:hover { transform: scale(1.05); }
+.logo-imagen { width: 100%; max-width: 140px; filter: brightness(0) invert(1); }
+.menu-botones { padding: 0 10px; display: flex; flex-direction: column; gap: 5px;}
+.menu-botones button { background: transparent; border: none; color: var(--epic-grey); text-align: left; padding: 15px 20px; font-size: 15px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+.menu-botones button:hover, .menu-botones button.activo { background-color: var(--epic-panel); color: var(--text-main); font-weight: bold;}
+
+.main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; background-color: var(--epic-bg); scroll-behavior: smooth;}
+.top-nav { display: flex; align-items: center; padding: 20px 40px; gap: 40px; border-bottom: 1px solid #1a1a1a;}
+.search-bar { display: flex; align-items: center; background-color: var(--epic-panel); border-radius: 20px; padding: 10px 15px; width: 300px; transition: 0.3s; border: 1px solid transparent;}
+.search-bar:focus-within { border-color: var(--epic-blue); }
+.search-bar input { background: none; border: none; color: white; outline: none; margin-left: 10px; width: 100%; }
+.nav-links { display: flex; gap: 30px; font-size: 15px; color: var(--epic-grey); }
+.nav-links span { cursor: pointer; transition: 0.2s; }
+.nav-links span.activo { color: white; font-weight: bold; border-bottom: 2px solid white; padding-bottom: 5px; }
+
+/* VISTAS GLOBALES */
+.vista-inicio, .vista-biblioteca, .vista-explora, .vista-detalle, .vista-categoria, .vista-noticias { padding: 0 40px 40px 40px; margin-top: 20px;}
+.mensaje-carga { text-align: center; margin-top: 100px; color: var(--epic-grey); }
+.subtitulo-pagina { color: var(--epic-grey); margin-bottom: 30px; font-size: 15px; }
+h1 { font-size: 32px; margin-bottom: 10px; font-weight: 800; }
+.animate-fade-in { animation: fadeInOp 0.4s ease-in-out; }
+@keyframes fadeInOp { from { opacity: 0; } to { opacity: 1; } }
+
+.btn-volver-grande {
+  background-color: transparent; color: white; border: 1px solid #444; padding: 12px 25px;
+  border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-bottom: 25px; transition: 0.2s;
+}
+.btn-volver-grande:hover { background-color: var(--epic-panel); border-color: white; }
+
+/* BANNER */
+.hero-container-v2 { position: relative; height: 400px; border-radius: 16px; overflow: hidden; margin-bottom: 40px; cursor: pointer; background: #000;}
+.hero-image { position: absolute; right: 0; width: 75%; height: 100%; object-fit: cover; z-index: 1; }
+.hero-container-v2::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, var(--epic-bg) 0%, var(--epic-bg) 25%, rgba(18,18,18,0.8) 40%, rgba(18,18,18,0) 70%); z-index: 2; }
+.hero-content { position: relative; display: flex; align-items: center; padding: 0 60px; height: 100%; z-index: 3; }
+.hero-text-area { max-width: 480px; }
+.hero-text-area h1 { font-size: 44px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+.btn-hero-profesional { background: white; color: black; border: none; padding: 12px 24px; font-weight: bold; border-radius: 5px; cursor: pointer; }
+.btn-banner-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; font-size: 24px; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; z-index: 5; opacity: 0; transition: 0.3s;}
+.hero-container-v2:hover .btn-banner-nav { opacity: 1; }
+.btn-banner-nav.prev { left: 20px; } .btn-banner-nav.next { right: 20px; }
+
+/* CARRUSELES Y GRILLAS */
+.catalogo-secciones { display: flex; flex-direction: column; gap: 50px; }
+.titulo-fila { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.ver-mas { font-size: 14px; color: white; background: var(--epic-panel); cursor: pointer; padding: 8px 15px; border-radius: 5px; }
+.carrusel-envoltorio { position: relative; display: flex; align-items: center;}
+.scroll-horizontal { display: flex; gap: 15px; overflow-x: auto; width: 100%; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; }
+.scroll-horizontal::-webkit-scrollbar { display: none; }
+.btn-carrusel-nav { position: absolute; z-index: 5; background: rgba(0,0,0,0.8); color: white; border: none; font-size: 30px; cursor: pointer; height: 105px; width: 50px; top: 0; opacity: 0; transition: 0.2s;}
+.carrusel-envoltorio:hover .btn-carrusel-nav { opacity: 1; }
+.btn-carrusel-nav.izq { left: 0; background: linear-gradient(90deg, #000 0%, transparent 100%);}
+.btn-carrusel-nav.der { right: 0; background: linear-gradient(-90deg, #000 0%, transparent 100%);}
+
+.grid-juegos-completo { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 30px 15px; }
+.scroll-horizontal .tarjeta-juego { min-width: 210px; max-width: 210px; flex: 0 0 auto; }
+
+/* ============================================================================
+   TARJETAS INTELIGENTES (CON FAVORITOS Y MODO LISTA)
+   ============================================================================ */
+.tarjeta-juego { background: var(--epic-panel); border-radius: 8px; display: flex; flex-direction: column; cursor: pointer; transition: 0.2s; position: relative;}
+.tarjeta-juego:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); background: var(--epic-hover);}
+.contenedor-img { width: 100%; height: 105px; border-radius: 8px 8px 0 0; overflow: hidden; background-color: #000; }
+.img-juego { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+.tarjeta-juego:hover .img-juego { transform: scale(1.05); }
+
+.info-tarjeta { padding: 12px; display: flex; flex-direction: column; flex: 1; }
+.info-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;}
+.tag { font-size: 10px; color: var(--epic-grey); text-transform: uppercase; }
+.btn-favorito { background: none; border: none; font-size: 14px; cursor: pointer; transition: 0.2s; padding: 0;}
+.btn-favorito:hover { transform: scale(1.2); }
+
+.tarjeta-juego h3 { font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;}
+.texto-desarrollador { display: none; font-size: 12px; color: var(--epic-grey); margin-top: 5px;}
+.precio { color: var(--text-main); font-size: 14px; font-weight: 600; margin: 0; margin-top: auto;}
+
+/* --- MODO LISTA --- */
+.grid-juegos-completo.modo-lista { display: flex; flex-direction: column; gap: 15px; }
+.tarjeta-juego.vista-lista { flex-direction: row; height: 90px; }
+.tarjeta-juego.vista-lista .contenedor-img { width: 180px; height: 100%; border-radius: 8px 0 0 8px; }
+.tarjeta-juego.vista-lista .info-tarjeta { flex-direction: column; justify-content: center; padding: 10px 20px;}
+.tarjeta-juego.vista-lista .info-header { justify-content: flex-start; gap: 15px;}
+.tarjeta-juego.vista-lista .texto-desarrollador { display: block;}
+.tarjeta-juego.vista-lista .area-instalacion { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); width: 150px; margin: 0;}
+
+/* BOTONES DE INSTALACIÓN */
+.area-instalacion { margin-top: auto; }
+.btn-instalar { width: 100%; background: #333; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; position: relative; overflow: hidden; transition: 0.3s; }
+.btn-instalar:hover { background: var(--epic-green); }
+.texto-hover { position: absolute; left: 0; width: 100%; top: 100%; transition: 0.3s; }
+.texto-original { display: block; transition: 0.3s; color: var(--text-muted); }
+.btn-instalar:hover .texto-original { transform: translateY(-200%); }
+.btn-instalar:hover .texto-hover { top: 50%; transform: translateY(-50%); }
+
+.barra-descarga-mini { height: 12px; background: #111; border-radius: 6px; position: relative; overflow: hidden; margin-top: 10px; }
+.progreso-mini { height: 100%; background: var(--epic-blue); transition: width 0.2s; }
+.porcentaje-mini { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 8px; font-weight: bold; }
+.btn-jugar { width: 100%; background: var(--epic-blue); color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+
+/* ============================================================================
+   DISEÑO EXCLUSIVO DE BIBLIOTECA (TABS, SIDEBAR ACORDEON)
+   ============================================================================ */
+.biblioteca-tabs {
+  display: flex; gap: 30px; font-size: 24px; font-weight: bold; color: var(--epic-grey);
+  border-bottom: 1px solid #222; padding-bottom: 15px; margin-bottom: 25px;
+}
+.biblioteca-tabs span { cursor: pointer; position: relative; transition: 0.2s;}
+.biblioteca-tabs span:hover { color: white; }
+.biblioteca-tabs span.activo { color: white; }
+.biblioteca-tabs span.activo::after {
+  content: ""; position: absolute; bottom: -17px; left: 0; width: 100%; height: 3px; background-color: white;
+}
+.icono-plus { margin-left: auto; cursor: pointer; }
+
+.biblioteca-layout { display: flex; gap: 40px; }
+.biblioteca-contenido-principal { flex: 1; }
+
+.biblioteca-controles { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;}
+.ordenar-por { font-size: 14px; color: var(--epic-grey); cursor: pointer;}
+.ordenar-por strong { color: white; margin-left: 5px; }
+
+.vistas-toggle { display: flex; gap: 10px; background: var(--epic-panel); padding: 5px; border-radius: 8px;}
+.vistas-toggle button { background: transparent; border: none; color: var(--epic-grey); font-size: 18px; padding: 5px 15px; border-radius: 5px; cursor: pointer; transition: 0.2s;}
+.vistas-toggle button.activo, .vistas-toggle button:hover { background: #333; color: white;}
+
+/* Sidebar Lateral Derecha (Estilo Epic Games) */
+.biblioteca-sidebar { width: 260px; flex-shrink: 0; }
+.biblioteca-sidebar h3 { margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px;}
+
+.search-bar-local { display: flex; align-items: center; background-color: var(--epic-panel); border-radius: 6px; padding: 10px 15px; width: 100%; border: 1px solid transparent; transition: 0.3s; margin-bottom: 20px; box-sizing: border-box;}
+.search-bar-local:focus-within { border-color: var(--epic-grey); }
+.search-bar-local input { background: none; border: none; color: white; outline: none; margin-left: 10px; width: 100%; }
+
+/* Acordeón HTML Nativo (Recreación Exacta de Epic) */
+.filtro-acordeon { border-top: 1px solid #222; padding: 15px 0; color: var(--text-muted); cursor: pointer;}
+.filtro-acordeon summary { font-weight: bold; font-size: 14px; list-style: none; display: flex; justify-content: space-between; outline: none; transition: 0.2s;}
+.filtro-acordeon summary:hover { color: white; }
+.filtro-acordeon summary::-webkit-details-marker { display: none; }
+.filtro-acordeon summary::after { content: '⌄'; font-size: 16px; }
+.filtro-acordeon[open] summary::after { content: '⌃'; }
+
+.acordeon-contenido { padding-top: 15px; display: flex; flex-direction: column; gap: 12px; font-size: 13px;}
+.acordeon-contenido p { margin: 0; cursor: pointer; transition: 0.2s; color: var(--epic-grey);}
+.acordeon-contenido p:hover { color: white; }
+.acordeon-contenido p.activo { color: white; font-weight: bold; }
+
+/* GESTOR DE INSTALACIONES */
+.gestor-instalaciones { background: var(--epic-panel); padding: 25px; border-radius: 12px; margin-bottom: 40px; border: 1px solid #333; }
+.gestor-instalaciones h2 { font-size: 18px; color: white; margin-top: 0; margin-bottom: 20px;}
+.item-descarga { display: flex; align-items: center; gap: 20px; padding: 15px 0; border-bottom: 1px solid #333; }
+.img-descarga { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
+.info-descarga { flex: 1; }
+.info-descarga h3 { margin: 0 0 5px 0; font-size: 16px; }
+.estado-texto { font-size: 11px; color: var(--epic-blue); text-transform: uppercase; margin-top: 0; margin-bottom: 10px; font-weight: bold;}
+.barra-progreso-grande { width: 100%; height: 6px; background: #111; border-radius: 3px; overflow: hidden; }
+.progreso-lleno { height: 100%; background: var(--epic-blue); transition: width 0.2s linear; }
+.porcentaje-grande { font-size: 18px; font-weight: bold; width: 60px; text-align: right; }
+
+/* EXPLORA Y DETALLE */
+.panel-filtros-tienda { width: 250px; background: var(--epic-panel); padding: 25px; border-radius: 12px; height: fit-content; }
+.grupo-filtro select { width: 100%; background: #121212; color: white; padding: 10px; border-radius: 6px; margin-top: 10px; border: 1px solid #333;}
+.explora-layout { display: flex; gap: 40px; }
+.explora-resultados { flex: 1; }
+
+.detalle-layout { display: flex; gap: 40px; }
+.columna-principal { flex: 2; }
+.media-placeholder { width: 100%; height: 450px; background-size: cover; background-position: center; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+.columna-lateral { flex: 1; max-width: 350px; }
+.poster-detalle { width: 100%; border-radius: 12px; margin-bottom: 20px;}
+.caja-compra { background: var(--epic-panel); padding: 25px; border-radius: 12px; }
+.precio-grande { font-size: 32px; font-weight: bold; margin-bottom: 10px; }
+.btn-comprar { width: 100%; background-color: var(--epic-green); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; margin-top: 10px; font-size: 15px; cursor: pointer; transition: 0.2s;}
+.estado-propiedad { text-align: center; }
+.txt-propiedad { background: rgba(46,204,113,0.1); color: var(--epic-green); padding: 15px; border-radius: 8px; font-weight: bold; border: 1px solid var(--epic-green); margin-bottom: 15px; margin-top: 0;}
+.btn-secundario { width: 100%; background: transparent; border: 1px solid #444; color: white; padding: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; }
+.btn-secundario:hover { background: rgba(255,255,255,0.1); border-color: white; }
+
+.panel-telemetria { background-color: var(--epic-panel); padding: 30px; border-radius: 12px; border: 1px solid #333; }
+.btn-escanear { background: transparent; color: var(--epic-blue); border: 2px solid var(--epic-blue); padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+
+/* NOTICIAS Y CHATBOT MANTIENEN SU ESTILO */
+.lista-noticias { display: flex; flex-direction: column; gap: 30px;}
+.tarjeta-noticia { display: flex; background: var(--epic-panel); border-radius: 15px; overflow: hidden; height: 220px; cursor: pointer;}
+.noticia-img { width: 40%; object-fit: cover; }
+.noticia-contenido { padding: 30px; display: flex; flex-direction: column; justify-content: center;}
+.noticia-fecha { font-size: 12px; color: var(--epic-blue); font-weight: bold; margin-bottom: 10px;}
+
+.chatbot-container { position: fixed; bottom: 20px; right: 40px; display: flex; flex-direction: column; align-items: flex-end; z-index: 100; }
+.chatbot-window { width: 320px; height: 400px; background-color: var(--epic-panel); border-radius: 12px; margin-bottom: 15px; display: flex; flex-direction: column;}
+.chat-header { background-color: var(--epic-blue); color: white; padding: 15px; font-weight: bold; text-align: center; }
+.chat-mensajes { flex: 1; padding: 20px; overflow-y: auto; }
+.mensaje-ia { background-color: var(--epic-bg); padding: 12px; border-radius: 8px; font-size: 14px;}
+.chat-input-area { display: flex; padding: 15px; background-color: var(--epic-bg); }
+.chat-input-area input { flex: 1; padding: 10px; border-radius: 4px; border: none;}
+.btn-chat-toggle { background-color: var(--epic-blue); color: white; border: none; padding: 15px 25px; border-radius: 30px; cursor: pointer; }
+
+
+
+/* ============================================================================
+   MÓDULO DE TELEMETRÍA (Panel de Juego y Vista Global)
+   ============================================================================ */
+
+/* --- PANEL DENTRO DEL DETALLE DEL JUEGO --- */
+.panel-telemetria { background-color: var(--epic-panel); padding: 30px; border-radius: 12px; border: 1px solid #333; margin-top: 20px; }
+.metricas-hardware { display: flex; gap: 15px; margin: 20px 0; }
+.metrica-caja { background-color: var(--epic-bg); padding: 15px; border-radius: 8px; flex: 1; display: flex; flex-direction: column; text-align: center; border: 1px solid #222;}
+.metrica-caja .label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;}
+.metrica-caja .valor { font-size: 14px; font-weight: bold; line-height: 1.4;}
+
+/* Estados de color para la telemetría */
+.metrica-caja .pendiente { color: #f39c12; font-style: italic; font-weight: normal;}
+.metrica-caja .detectado { color: var(--epic-green); text-shadow: 0 0 8px rgba(46, 204, 113, 0.3);}
+
+/* Resultados de Rendimiento FPS */
+.resultado-rendimiento { text-align: center; margin: 20px 0; background: #0a0a0a; padding: 15px; border-radius: 8px; border-left: 4px solid var(--epic-blue);}
+.resultado-rendimiento h3 { margin: 0; font-size: 16px; color: var(--text-muted);}
+.txt-fps { color: var(--epic-blue); font-size: 22px; font-weight: 900; margin-left: 10px; text-shadow: 0 0 10px rgba(0, 120, 242, 0.4);}
+
+/* Botón de Escaneo Pequeño */
+.btn-escanear { background: transparent; color: var(--epic-blue); border: 2px solid var(--epic-blue); padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;}
+.btn-escanear:hover { background-color: rgba(0, 120, 242, 0.1); }
+.btn-escanear.cargando { border-color: #f39c12; color: #f39c12; animation: pulseTelemetria 1.5s infinite; pointer-events: none;}
+
+/* --- VISTA GLOBAL: EVALUAR PC (Menú Lateral) --- */
+.vista-evaluar { padding: 40px; display: flex; flex-direction: column; align-items: center; }
+.panel-telemetria-global { background: var(--epic-panel); padding: 50px; border-radius: 16px; width: 100%; max-width: 650px; text-align: center; border: 1px solid #333; box-shadow: 0 20px 50px rgba(0,0,0,0.6); margin-top: 20px;}
+
+/* Animación de Radar */
+.animacion-escaneo { font-size: 50px; margin-bottom: 20px; height: 80px; display: flex; justify-content: center; align-items: center;}
+.radar-inactivo { filter: grayscale(1); opacity: 0.3; }
+.radar-activo { animation: spinRadar 2s linear infinite; color: var(--epic-green); text-shadow: 0 0 20px var(--epic-green);}
+
+/* Botón Gigante de Escaneo */
+.btn-escanear-gigante { background: var(--epic-blue); color: white; border: none; padding: 20px 40px; font-size: 18px; font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%; margin-bottom: 30px; transition: 0.3s; text-transform: uppercase; letter-spacing: 2px;}
+.btn-escanear-gigante:hover { background: var(--epic-blue-hover); transform: scale(1.02); box-shadow: 0 10px 20px rgba(0, 120, 242, 0.3);}
+.btn-escanear-gigante.cargando { background: #111; color: var(--epic-green); border: 2px solid var(--epic-green); animation: pulseTelemetria 1s infinite; pointer-events: none;}
+
+/* Pantalla de Resultados Finales */
+.resultados-globales { text-align: left; background: #0a0a0a; padding: 25px; border-radius: 10px; border-left: 4px solid var(--epic-green);}
+.resultado-item { margin-bottom: 15px; font-size: 15px; display: flex; justify-content: space-between; border-bottom: 1px dashed #222; padding-bottom: 10px; align-items: center;}
+.resultado-item:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0;}
+.resultado-item strong { color: var(--epic-grey); text-transform: uppercase; font-size: 12px; letter-spacing: 1px;}
+.resultado-item span { color: var(--epic-green); font-weight: bold; text-align: right; max-width: 65%; word-wrap: break-word;}
+
+/* Animaciones Clave */
+@keyframes pulseTelemetria { 0% { opacity: 1; box-shadow: 0 0 0 rgba(243, 156, 18, 0.4); } 50% { opacity: 0.7; box-shadow: 0 0 20px rgba(243, 156, 18, 0.2); } 100% { opacity: 1; box-shadow: 0 0 0 rgba(243, 156, 18, 0); } }
+@keyframes spinRadar { 100% { transform: rotate(360deg); } }
