@@ -4,6 +4,8 @@ import logoImg from "./assets/logo.png";
 
 // Importamos los componentes externos de Hardware
 import { PanelHardwareJuego, VistaEvaluarPC } from "./Telemetria";
+// NUEVA IMPORTACIÓN: Traemos el componente avanzado que acabamos de crear
+import { DetalleAvanzado } from "./DetalleAvanzado"; 
 
 const NOTICIAS_DB = [
   { id: 1, titulo: "Grand Theft Auto VI rompe récords históricos de preventa", fecha: "5 de Marzo, 2026", img: "https://images.unsplash.com/photo-1605901309584-818e25960b8f?q=80&w=800", extracto: "Rockstar Games confirma que la anticipación ha superado cualquier lanzamiento previo." },
@@ -488,37 +490,45 @@ function App() {
         {/* --- VISTA: DETALLE DE JUEGO (Importando Módulo) --- */}
         {!cargando && vistaActiva === "detalle" && juegoSeleccionado && (
           <section className="vista-detalle animate-fade-in">
-            <button className="btn-volver-grande" onClick={() => window.history.back()}>&#8592; Volver</button>
-            <div className="detalle-layout">
-              
-              <div className="columna-principal">
-                <div className="media-placeholder" style={{ backgroundImage: `url('${juegoSeleccionado.imagen_url}')` }}></div>
+            <button className="btn-volver-grande" onClick={() => window.history.back()} style={{ marginBottom: "15px" }}>&#8592; Volver</button>
+            
+            {/* === INICIO DEL NUEVO COMPONENTE === */}
+            <DetalleAvanzado juegoId={juegoSeleccionado.id} />
+            {/* === FIN DEL NUEVO COMPONENTE === */}
+
+            {/* SE OCULTA EL CÓDIGO ANTERIOR PARA NO BORRARLO, EXACTAMENTE COMO LO SOLICITASTE */}
+            <div style={{ display: "none" }}>
+              <div className="detalle-layout">
                 
-                {/* AQUI ESTAMOS LLAMANDO AL ARCHIVO EXTERNO DE TELEMETRÍA */}
-                <PanelHardwareJuego 
-                  onAnalisisCompletado={(mensajeIA) => {
-                    setMensajeIA(mensajeIA);
-                    setChatAbierto(true);
-                  }} 
-                />
+                <div className="columna-principal">
+                  <div className="media-placeholder" style={{ backgroundImage: `url('${juegoSeleccionado.imagen_url}')` }}></div>
+                  
+                  {/* AQUI ESTAMOS LLAMANDO AL ARCHIVO EXTERNO DE TELEMETRÍA */}
+                  <PanelHardwareJuego 
+                    onAnalisisCompletado={(mensajeIA) => {
+                      setMensajeIA(mensajeIA);
+                      setChatAbierto(true);
+                    }} 
+                  />
 
-              </div>
+                </div>
 
-              <div className="columna-lateral">
-                <img src={juegoSeleccionado.imagen_url} alt="Poster" className="poster-detalle" />
-                <h2>{juegoSeleccionado.titulo}</h2>
-                <div className="caja-compra">
-                  {juegoSeleccionado.comprado ? (
-                    <div className="estado-propiedad">
-                      <p className="txt-propiedad">✅ Este juego ya es tuyo</p>
-                      <button className="btn-secundario" onClick={() => cambiarVista("biblioteca")}>Ir a Biblioteca</button>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="precio-grande">{juegoSeleccionado.precio === 0 ? "Gratis" : `$${juegoSeleccionado.precio}`}</div>
-                      <button className="btn-comprar" onClick={() => comprarJuego(juegoSeleccionado.id)}>Obtener ahora</button>
-                    </>
-                  )}
+                <div className="columna-lateral">
+                  <img src={juegoSeleccionado.imagen_url} alt="Poster" className="poster-detalle" />
+                  <h2>{juegoSeleccionado.titulo}</h2>
+                  <div className="caja-compra">
+                    {juegoSeleccionado.comprado ? (
+                      <div className="estado-propiedad">
+                        <p className="txt-propiedad">✅ Este juego ya es tuyo</p>
+                        <button className="btn-secundario" onClick={() => cambiarVista("biblioteca")}>Ir a Biblioteca</button>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="precio-grande">{juegoSeleccionado.precio === 0 ? "Gratis" : `$${juegoSeleccionado.precio}`}</div>
+                        <button className="btn-comprar" onClick={() => comprarJuego(juegoSeleccionado.id)}>Obtener ahora</button>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

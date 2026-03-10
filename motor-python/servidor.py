@@ -132,7 +132,7 @@ def get_detalle_juego(juego_id):
     return jsonify(estructura_completa)
 
 # =====================================================================
-# --- 5. NUEVO: MÓDULO DE TELEMETRÍA (WMI) ---
+# --- 5. MÓDULO DE TELEMETRÍA AVANZADA (WMI) ---
 # =====================================================================
 @app.route('/api/telemetria', methods=['GET'])
 def escanear_hardware():
@@ -145,18 +145,27 @@ def escanear_hardware():
         # 1. Leer Procesador (CPU)
         cpu_nombre = c.Win32_Processor()[0].Name.strip()
 
-        # 2. Leer Tarjeta Gráfica (GPU)
-        gpu_nombre = c.Win32_VideoController()[0].Name.strip()
+        # 2. Leer Tarjetas Gráficas (GPU) y buscar la Dedicada
+        controladores_video = c.Win32_VideoController()
+        nombres_gpus = [gpu.Name.strip() for gpu in controladores_video]
+        
+        # Lógica: Por defecto toma la primera, pero si ve una NVIDIA o AMD, le da prioridad
+        gpu_final = nombres_gpus[0] 
+        for nombre in nombres_gpus:
+            nombre_upper = nombre.upper()
+            if "NVIDIA" in nombre_upper or "AMD" in nombre_upper or "RADEON" in nombre_upper:
+                gpu_final = nombre
+                break
 
         # 3. Leer Memoria RAM
         ram_bytes = psutil.virtual_memory().total
         ram_gb = round(ram_bytes / (1024**3))
 
-        print(f"Detectado exitosamente: {cpu_nombre} | {gpu_nombre} | {ram_gb}GB")
+        print(f"Detectado exitosamente: {cpu_nombre} | {gpu_final} | {ram_gb}GB")
         
         return jsonify({
             "cpu": cpu_nombre,
-            "gpu": gpu_nombre,
+            "gpu": gpu_final,
             "ram": f"{ram_gb} GB",
             "os": "Windows",
             "status": "success"
